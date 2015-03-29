@@ -19,4 +19,12 @@ module.exports =
      content: activeItem.getText()
 
     @gist.create (response) =>
-        atom.workspaceView.statusBar?.find('.gist-message').html("Gist created at " + response.html_url)
+      atom.confirm
+          message: 'Copy gist link? '
+          detailedMessage: response.html_url
+          buttons:
+            Yes: -> atom.clipboard.write(response.html_url)
+            No: ->
+
+
+        atom.workspaceView.statusBar?.find('.gist-message').remove()
